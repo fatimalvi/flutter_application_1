@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/hospitals.dart';
 import 'package:flutter_application_1/screens/home_page.dart';
@@ -5,10 +7,12 @@ import 'package:flutter_application_1/screens/patient_login.dart';
 import 'package:flutter_application_1/widgets/hospital_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_application_1/screens/user_profile.dart';
 
 class Hospital_Search extends StatefulWidget{
   final String userId;
-  const Hospital_Search({required this.userId});
+  final String username;
+  const Hospital_Search({required this.userId, required this.username});
   @override
   State<Hospital_Search> createState() => HospitalSearch();
 }
@@ -18,31 +22,18 @@ class HospitalSearch extends State<Hospital_Search>{
   //
   //const Hospital_Search({required this.userId});
   String? userName = '';
+  String uid = '';
 
   @override
   void initState() {
     super.initState();
-    _getUserData();
+    //_getUserData();
   }
   
 
   Future<void> _getUserData() async {
-
-    //print(widget.userId);
-
-    final userData = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(widget.userId.toString())
-        .get();
-
-    if (userData.exists) {
-      final data = userData.data() as Map<String, dynamic>;
-      setState(() {
-        userName = data['firstName'];
-      });
-    } //else {
-    //  print('User does not exist');
-   // }
+    userName = widget.username.toString();
+    uid = widget.userId.toString();
   }
   
  
@@ -63,7 +54,7 @@ class HospitalSearch extends State<Hospital_Search>{
             ),
           ),
           SizedBox(
-            height: 60.0,
+            height: 20.0,
           ),
           Image.asset(
             "assets/images/user.png",
@@ -74,8 +65,7 @@ class HospitalSearch extends State<Hospital_Search>{
           Padding(
             
             padding: const EdgeInsets.all(16.0),
-            child: userName != null
-                ? Text(
+            child: Text(
                     'Hello $userName',
                     style: TextStyle(
                       fontFamily: 'Oswald',
@@ -83,11 +73,12 @@ class HospitalSearch extends State<Hospital_Search>{
                       fontWeight: FontWeight.bold,
                     ),
                   )
-                : CircularProgressIndicator(),
+                
           ),
 
           // Search bar
           Padding(
+            
             padding: const EdgeInsets.all(10.0),
             child: TextField(
               decoration: InputDecoration(
@@ -100,7 +91,7 @@ class HospitalSearch extends State<Hospital_Search>{
           // Hospital list
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(5.0),
               child: ListView.builder(
                 itemCount: HospitalsList.hospitals.length,
                 itemBuilder: (context, index) {
@@ -111,6 +102,74 @@ class HospitalSearch extends State<Hospital_Search>{
               ),
             ),
           ),
+          Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    
+                    TextButton(
+                      onPressed: () async{
+                        late User _user;
+                        late DocumentSnapshot _userData;
+
+                        _userData = await FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(uid)
+                            .get();
+                        setState(() {});
+
+                        String firstname = _userData['firstName'];
+                        String lastname = _userData['lastName'];
+                        String dob = _userData['dateofbirth'];
+                        String _gender = _userData['gender'];
+                        String _marital = _userData['marital'];
+                        String _cnic = _userData['cnic'].toString();
+                        String _blood = _userData['bloodgroup'];
+                        String _height = _userData['height'].toString();
+                        String _weight = _userData['weight'].toString();
+                        String _area = _userData['area'].toString();
+
+                        bool _asthma = _userData['asthma'];
+                        bool _cancer = _userData['cancer'];
+                        bool _cardiac = _userData['cardiac'];
+                        bool _diabetes = _userData['diabetes'];
+                        bool _tension = _userData['tension'];
+                        bool _epilepsy = _userData['epilepsy'];
+                        bool _psych = _userData['psychiatric'];
+
+                        String _tobacco = _userData['tobacco'].toString();
+
+                        String _additional = _userData['additional Information'];
+                        String _medication = _userData['medicine'];
+                        String _special = _userData['special needs'];
+                        String _phone = '0' + _userData['phone'].toString();
+
+
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return UserProfile(uid: uid, firstName: firstname, lastName: lastname,
+                                             dateofbirth: dob, gender: _gender, marital: _marital,
+                                             cnic: _cnic, blood: _blood, height: _height, weight: _weight,
+                                             asthma: _asthma,  cancer: _cancer,  cardiac: _cardiac,  
+                                             diabetes: _diabetes, tension: _tension,  epilepsy: _epilepsy,  
+                                             psych: _psych, tobacco: _tobacco, additional: _additional,
+                                             medication: _medication,  special: _special, area: _area,
+                                             phone: _phone
+                          );
+                        }));
+                        
+                        }
+                        // Navigate to Signup screen
+                      ,
+                      child: Text(
+                        "Profile",
+                        style: TextStyle(
+                          fontSize: 17.0,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
         ],
       ),
     );

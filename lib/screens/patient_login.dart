@@ -131,9 +131,19 @@ class PatientLogin extends State<Patient_Login>{
                         User? user = userCredential.user;
                         String userId = user?.uid ?? '';
 
+                        final userData = await FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(userId.toString())
+                            .get();
+
+                        final data = userData.data() as Map<String, dynamic>;
+                        String user_Name = data['firstName'];
+
+            
+
                         
                           Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Hospital_Search(userId: userId),
+                          MaterialPageRoute(builder: (context) => Hospital_Search(userId: userId, username: user_Name),
                       
                       ));
                         
