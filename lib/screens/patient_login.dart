@@ -1,15 +1,14 @@
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/auth/auth_services.dart';
+
 import 'package:flutter_application_1/screens/home_page.dart';
 import 'package:flutter_application_1/screens/hospital_search.dart';
-import 'package:intl/intl.dart';
-import 'package:flutter/services.dart';
-import 'package:email_validator/email_validator.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_application_1/screens/sign_up2.dart';
 import 'package:flutter_application_1/auth/auth_email.dart';
+import 'package:flutter_application_1/screens/forgot_password.dart';
 
 class Patient_Login extends StatefulWidget{
   const Patient_Login({super.key});
@@ -211,6 +210,27 @@ class PatientLogin extends State<Patient_Login>{
                       },
                       child: Text(
                         "Signup",
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextButton(
+                      onPressed: (){
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return Forgot_Password();
+                        }));
+                        // Navigate to Signup screen
+                      },
+                      child: Text(
+                        "Forgot Password",
                         style: TextStyle(
                           fontSize: 16.0,
                           decoration: TextDecoration.underline,

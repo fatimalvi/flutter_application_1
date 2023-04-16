@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/hospitals.dart';
-import 'package:flutter_application_1/screens/home_page.dart';
+
 import 'package:flutter_application_1/screens/patient_login.dart';
 import 'package:flutter_application_1/widgets/hospital_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -46,7 +46,10 @@ class HospitalSearch extends State<Hospital_Search>{
           AppBar(
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
-              onPressed: () {
+              onPressed: () async {
+                
+                await FirebaseAuth.instance.signOut();
+
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return Patient_Login();
                 }));
@@ -67,7 +70,7 @@ class HospitalSearch extends State<Hospital_Search>{
             padding: const EdgeInsets.all(16.0),
             child: Text(
                     'Hello $userName',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'Oswald',
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -77,9 +80,9 @@ class HospitalSearch extends State<Hospital_Search>{
           ),
 
           // Search bar
-          Padding(
+          const Padding(
             
-            padding: const EdgeInsets.all(10.0),
+            padding: EdgeInsets.all(10.0),
             child: TextField(
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.search_rounded),

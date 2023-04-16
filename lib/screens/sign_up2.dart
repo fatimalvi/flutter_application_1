@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
-import 'package:email_validator/email_validator.dart';
-//import 'package:flutter_code/services/auth/auth_exceptions.dart';
 import 'package:flutter_application_1/auth/auth_services.dart';
 import 'package:flutter_application_1/screens/patient_login.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_application_1/screens/verify_email.dart';
 
 
 class Patient_SignUp extends StatefulWidget {
@@ -19,6 +17,7 @@ class _Patient_SignUpState extends State<Patient_SignUp> {
   final _formKey = GlobalKey<FormState>();
   late final TextEditingController _email;
   late final TextEditingController _password;
+  
 
   //late final TextEditingController _FnameTextController;
   //late final TextEditingController _LnameTextController;
@@ -114,13 +113,16 @@ class _Patient_SignUpState extends State<Patient_SignUp> {
       decoration: InputDecoration(
                         labelText: "First Name ",
                           
-                          suffix: Text(
-                            "*",
-                            style: TextStyle(
-                              color: Colors.red,
-                              fontSize: 16.0,
+                          suffixIcon: Padding(
+                              padding: EdgeInsets.only(left: 42.0),
+                              child: Text(
+                                "*",
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 16.0,
+                                ),
+                              ),
                             ),
-                          ),
                         
                       ),
     );
@@ -145,13 +147,16 @@ class _Patient_SignUpState extends State<Patient_SignUp> {
       decoration: InputDecoration(
                         labelText: "Last Name ",
                           
-                          suffix: Text(
-                            "*",
-                            style: TextStyle(
-                              color: Colors.red,
-                              fontSize: 16.0,
-                            ),
-                          ),
+                          suffixIcon: Padding(
+                            padding: EdgeInsets.only(left: 42.0),
+                            child: Text(
+                              "*",
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontSize: 16.0,
+                              ),
+      ),
+    ),
                       ),
     );
     
@@ -173,13 +178,16 @@ class _Patient_SignUpState extends State<Patient_SignUp> {
       decoration: InputDecoration(
                         labelText: "Email",
                           
-                          suffix: Text(
-                            "*",
-                            style: TextStyle(
-                              color: Colors.red,
-                              fontSize: 16.0,
+                           suffixIcon: Padding(
+                              padding: EdgeInsets.only(left: 42.0),
+                              child: Text(
+                                "*",
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 16.0,
+                                ),
+                              ),
                             ),
-                          ),
                       ),
     );
 
@@ -200,13 +208,16 @@ class _Patient_SignUpState extends State<Patient_SignUp> {
       decoration: InputDecoration(
         labelText: "Password",
                           
-                          suffix: Text(
-                            "*",
-                            style: TextStyle(
-                              color: Colors.red,
-                              fontSize: 16.0,
+                           suffixIcon: Padding(
+                              padding: EdgeInsets.only(left: 42.0),
+                              child: Text(
+                                "*",
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 16.0,
+                                ),
+                              ),
                             ),
-                          ),
       ),
     );
 
@@ -229,13 +240,16 @@ class _Patient_SignUpState extends State<Patient_SignUp> {
       obscureText: true,
       decoration: InputDecoration(
         labelText: "Confirmed Password",
-                          suffix: Text(
-                            "*",
-                            style: TextStyle(
-                              color: Colors.red,
-                              fontSize: 16.0,
+                           suffixIcon: Padding(
+                              padding: EdgeInsets.only(left: 42.0),
+                              child: Text(
+                                "*",
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 16.0,
+                                ),
+                              ),
                             ),
-                          ),
       ),
     );
     
@@ -251,13 +265,16 @@ class _Patient_SignUpState extends State<Patient_SignUp> {
       
       decoration: InputDecoration(
                         labelText: "CNIC",
-                         suffix: Text(
-                            "*",
-                            style: TextStyle(
-                              color: Colors.red,
-                              fontSize: 16.0,
+                          suffixIcon: Padding(
+                              padding: EdgeInsets.only(left: 42.0),
+                              child: Text(
+                                "*",
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 16.0,
+                                ),
+                              ),
                             ),
-                          ),
                       ),
     );
 
@@ -291,13 +308,16 @@ class _Patient_SignUpState extends State<Patient_SignUp> {
       
       decoration: InputDecoration(
                         labelText: "Phone Number",
-                         suffix: Text(
-                            "*",
-                            style: TextStyle(
-                              color: Colors.red,
-                              fontSize: 16.0,
+                          suffixIcon: Padding(
+                              padding: EdgeInsets.only(left: 42.0),
+                              child: Text(
+                                "*",
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 16.0,
+                                ),
+                              ),
                             ),
-                          ),
                       ),
     );
 
@@ -322,13 +342,16 @@ class _Patient_SignUpState extends State<Patient_SignUp> {
                               child: TextFormField(
                                 decoration: InputDecoration(
                                   labelText: "Date of Birth",
-                                            suffix: Text(
-                                      "*",
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                        fontSize: 16.0,
-                                      ),
-                                    ),
+                                             suffixIcon: Padding(
+                              padding: EdgeInsets.only(left: 42.0),
+                              child: Text(
+                                "*",
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                            ),
                                 ),
                                 controller: TextEditingController(
                                   text: DateFormat('dd/MM/yyyy')
@@ -498,13 +521,16 @@ class _Patient_SignUpState extends State<Patient_SignUp> {
                                     ],
                     decoration: InputDecoration(
                       labelText: "Weight (kgs)",
-                       suffix: Text(
-                            "*",
-                            style: TextStyle(
-                              color: Colors.red,
-                              fontSize: 16.0,
+                        suffixIcon: Padding(
+                              padding: EdgeInsets.only(left: 42.0),
+                              child: Text(
+                                "*",
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 16.0,
+                                ),
+                              ),
                             ),
-                          ),
                     ),
                   );
     final heightField = TextFormField(
@@ -518,13 +544,16 @@ class _Patient_SignUpState extends State<Patient_SignUp> {
                                     ],
                     decoration: InputDecoration(
                       labelText: "Height (cm)",
-                       suffix: Text(
-                            "*",
-                            style: TextStyle(
-                              color: Colors.red,
-                              fontSize: 16.0,
+                        suffixIcon: Padding(
+                              padding: EdgeInsets.only(left: 42.0),
+                              child: Text(
+                                "*",
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 16.0,
+                                ),
+                              ),
                             ),
-                          ),
                     ),
                   );
     final maritalField = DropdownButtonFormField(
@@ -764,10 +793,18 @@ class _Patient_SignUpState extends State<Patient_SignUp> {
                             }
 
                             if (errorMessage.toString() == 'Account Registered'){
+
+                              final FirebaseAuth _auth = FirebaseAuth.instance;
+                              UserCredential newUserCredential = await _auth.signInWithEmailAndPassword(
+                                  email: email,
+                                  password: password,
+                                );
+                                User user = newUserCredential.user!;
+
                               Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
                               
-                                return Patient_Login();
+                                return verify_Email(email:email, password:password, user:user );
                             })
                             );
                             }

@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -17,9 +15,10 @@ class AuthService {
                                                 String weight, String height, 
                                                 String marital, String textBox1,
                                                 String textBox2, String textBox3) async {
+   
     try {
 
-
+       
       if (firstName == ""){
         return "First name cannot be empty.";
       }
@@ -53,6 +52,7 @@ class AuthService {
       if (cnic == ""){
         return "CNIC cannot be empty";
       }
+      
 
       if (phone.length != 11){
         return "Phone number must be 13 Digits. Try Again.";
@@ -89,14 +89,18 @@ class AuthService {
       if (textBox3== ""){
         textBox3 = "None";
       }
-
+       
       CollectionReference collectionRef =  FirebaseFirestore.instance.collection('cnicCollection');
       DocumentReference documentRef = collectionRef.doc(cnic);
+       
       DocumentSnapshot documentSnapshot = await documentRef.get();
+
+       
 
       if (documentSnapshot.exists) {
         return "An account with this CNIC already exists.";
       } 
+      
 
 
 
@@ -107,6 +111,7 @@ class AuthService {
       User user = userCredential.user!;
       // Update the user's display name with their first name
       await user.updateDisplayName(firstName);
+      
 
       await FirebaseFirestore.instance.collection('cnicCollection').doc(cnic).set({
         'cnic': cnic
@@ -139,6 +144,29 @@ class AuthService {
         'additional Information': textBox3
       });
 
+      final FirebaseAuth _auth = FirebaseAuth.instance;
+      
+     
+      //print(email);
+      try {
+        UserCredential newUserCredential = await _auth.signInWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
+        User newUser = newUserCredential.user!;
+        await newUser.sendEmailVerification();
+        
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'weak-password') {
+          return 'The password provided is too weak.';
+        } else if (e.code == 'email-already-in-use') {
+          return 'The account already exists for that email.';
+        }
+      } catch (e) {
+        return 'An error occurred while signing up.';
+      }
+
+
       return 'Account Registered';
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -146,10 +174,21 @@ class AuthService {
       } else if (e.code == 'email-already-in-use') {
         return 'The account already exists for that email.';
       }
+      else if (e.code == 'permission-denied'){
+        return "??";
+      }
+      else if (e.code == 'not-found') {
+        return "???";
+      }
       else{
-        return 'An error occurred ??';
+        print('Error retrieving document: $e');
+        return 'An error occurred ?? 1';
       }
     } catch (e) {
+
+      print('Error retrieving document: $e');
+      
+      
       return 'Errorrrr';
     }
   }

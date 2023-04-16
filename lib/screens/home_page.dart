@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/patient_login.dart';
-import 'sign_up2.dart';
+
 
 class MyHomePage extends StatelessWidget {
   @override
@@ -23,14 +23,14 @@ class MyHomePage extends StatelessWidget {
             children: <Widget>[
               Column(
                 children: <Widget>[
-                  Container(
+                 Container(
                     //alignment: Alignment.topCenter,
                     child: Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: Column(
                           children: <Widget>[
-                            SizedBox(height: 30.0),
-                            Text(
+                            const SizedBox(height: 30.0),
+                            const Text(
                               "WELCOME",
                               style: TextStyle(
                                 fontFamily: 'Oswald',
@@ -38,7 +38,7 @@ class MyHomePage extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(height: 15.0),
+                            const SizedBox(height: 15.0),
                             Text(
                               "What do you identify as?",
                               style: TextStyle(
@@ -54,7 +54,7 @@ class MyHomePage extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  SizedBox(
+                  const SizedBox(
                     height: 60.0,
                   ),
                   Image.asset(
@@ -62,22 +62,22 @@ class MyHomePage extends StatelessWidget {
                     width: 160,
                     height: 160,
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return Patient_Login();
+                        return const Patient_Login();
                       }));
                     },
-                    child: Text('Patient'),
+                    child: const Text('Patient'),
                   ),
                 ],
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  SizedBox(
+                  const SizedBox(
                     height: 50.0,
                   ),
                   Image.asset(
@@ -85,20 +85,20 @@ class MyHomePage extends StatelessWidget {
                     width: 160,
                     height: 160,
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
                       
                     
                     },
-                    child: Text('Admin'),
+                    child: const Text('Admin'),
                   ),
                 ],
               ),
             ],
           ),
         ),
-      ),
-    );
+      ),)
+    ;
   }
 }

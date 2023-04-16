@@ -16,12 +16,27 @@ class EmailAuthService {
     }
 
 
+  
+
+
     try {
 
           UserCredential userCredential = await auth.signInWithEmailAndPassword(
             email: email,
             password: password,
           );
+
+          if (FirebaseAuth.instance.currentUser != null) {
+                  bool isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
+                  if (isEmailVerified) {
+                    return "Yay";
+                  } else {
+                    return "Please Verify Email to Continue";
+                  }
+                } else {
+                  await FirebaseAuth.instance.signOut();
+                  // There is no logged-in user.
+          }
               //User user = UserCredential.user'         
           
       return "Yay";
@@ -33,7 +48,8 @@ class EmailAuthService {
         return 'Your password is incorrect. Please try again.';
       } 
       else{
-        return 'An error occurred ??';
+        print('Error retrieving document: $e');
+        return 'User does not exist';
       }
     } catch (e) {
       return 'Errorrrr';

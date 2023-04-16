@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'package:flutter_application_1/screens/edit_account.dart';
 
 class UserProfile extends StatefulWidget {
   final String uid;
@@ -46,6 +46,8 @@ class _UserProfileState extends State<UserProfile> {
   late User _user;
   //ate DocumentSnapshot _userData;
 
+  String uid = '';
+
   String firstName = '';
   String lastName = '';
   String dob = '';
@@ -81,7 +83,7 @@ class _UserProfileState extends State<UserProfile> {
 
   Future<void> _getUserData() async {
     
-
+    uid = widget.uid;
     firstName = widget.firstName;
     lastName = widget.lastName;
     dob = widget.dateofbirth;
@@ -114,7 +116,7 @@ class _UserProfileState extends State<UserProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('User Profile'),
+        title: const Text('User Profile'),
       ),
       body: 
            Column(
@@ -137,7 +139,17 @@ class _UserProfileState extends State<UserProfile> {
                       // add some spacing between the text widgets
                       TextButton(
                         onPressed: () {
-                          // add your button's on pressed function here
+                          Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return Patient_Edit(uid: uid, firstName: firstName, lastName: lastName,
+                                             dateofbirth: dob, gender: gender, marital: marital,
+                                             cnic: cnic, blood: blood, height: height, weight: weight,
+                                             asthma: asthma,  cancer: cancer,  cardiac: cardiac,  
+                                             diabetes: diabetes, tension: tension,  epilepsy: epilepsy,  
+                                             psych: psych, tobacco: tobacco, additional: additional,
+                                             medication: medication,  special: special, area: area,
+                                             phone: phone);
+                      }));
                         },
                         child: Text(
                           'Edit Account Information',
