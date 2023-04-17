@@ -109,7 +109,7 @@ class HospitalSearch extends State<Hospital_Search>{
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     
-                    TextButton(
+                    ElevatedButton(
                       onPressed: () async{
                         late User _user;
                         late DocumentSnapshot _userData;
@@ -167,7 +167,7 @@ class HospitalSearch extends State<Hospital_Search>{
                         "Profile",
                         style: TextStyle(
                           fontSize: 17.0,
-                          decoration: TextDecoration.underline,
+                          //decoration: TextDecoration.underline,
                         ),
                       ),
                     ),

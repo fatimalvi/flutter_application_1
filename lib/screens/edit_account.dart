@@ -119,6 +119,7 @@ class _Patient_EditState extends State<Patient_Edit> {
   Future<void> _getUserData() async {
 
     uid = widget.uid;
+   
 
     _FnameTextController = TextEditingController(text: widget.firstName);
     _LnameTextController = TextEditingController(text: widget.lastName);
@@ -129,7 +130,7 @@ class _Patient_EditState extends State<Patient_Edit> {
     //uid = widget.uid;
     
     //_selectedDate = DateTime.parse(widget.dateofbirth);
-    print(widget.dateofbirth);
+    
     _selectedDate = new DateFormat('dd/MM/yyyy').parse(widget.dateofbirth);
    
     _marital = widget.marital;
@@ -580,7 +581,7 @@ class _Patient_EditState extends State<Patient_Edit> {
                 leading: IconButton(
                   icon: Icon(Icons.arrow_back),
                   onPressed: () {
-                    Navigator.pop(context);
+                    
                   },
                 ),
               ),
@@ -708,11 +709,12 @@ class _Patient_EditState extends State<Patient_Edit> {
                             final textBox1 = _textbox1.text;
                             final textBox2 = _textbox2.text;
                             final textBox3 = _textbox3.text;
+                            final userid = uid;
 
 
 
                             AuthService2 authService = AuthService2();
-                            String? errorMessage = await authService.createUserWithEmailAndPassword(uid, firstName, lastName, confirmedPassword, cnic, gender, phone, dateofbirth, area, bloodGroup, asthma, cancer, cardiac, diabetes, tension, psychiatric, epilepsy, tobacco, weight, height, marital, textBox1, textBox2, textBox3);
+                            String? errorMessage = await authService.createUserWithEmailAndPassword(userid, firstName, lastName, confirmedPassword, cnic, gender, phone, dateofbirth, area, bloodGroup, asthma, cancer, cardiac, diabetes, tension, psychiatric, epilepsy, tobacco, weight, height, marital, textBox1, textBox2, textBox3);
 
                             if (errorMessage != 'Account Registered'){
 
@@ -751,7 +753,7 @@ class _Patient_EditState extends State<Patient_Edit> {
                             if (errorMessage.toString() == 'Account Registered'){
                               Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                              return UserProfile(uid: uid, firstName: firstName, lastName: lastName,
+                              return UserProfile(uid: userid, firstName: firstName, lastName: lastName,
                                              dateofbirth: dateofbirth, gender: gender, marital: marital,
                                              cnic: cnic, blood: bloodGroup, height: height, weight: weight,
                                              asthma: asthma,  cancer: cancer,  cardiac: cardiac,  

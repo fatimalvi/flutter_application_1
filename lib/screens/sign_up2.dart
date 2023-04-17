@@ -511,14 +511,10 @@ class _Patient_SignUpState extends State<Patient_SignUp> {
                   );
 
     final weightField =  TextFormField(
-                    keyboardType: TextInputType.numberWithOptions(decimal: true),
+                    //keyboardType: TextInputType.numberWithOptions(decimal: true),
                     controller: _weight,
-                    onSaved: (value){
-                      _weight.text = value!;
-                    },
-                    inputFormatters: [
-                                      FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))
-                                    ],
+                    
+                   
                     decoration: InputDecoration(
                       labelText: "Weight (kgs)",
                         suffixIcon: Padding(
@@ -534,14 +530,10 @@ class _Patient_SignUpState extends State<Patient_SignUp> {
                     ),
                   );
     final heightField = TextFormField(
-                    keyboardType: TextInputType.numberWithOptions(decimal: true),
+                    //keyboardType: TextInputType.numberWithOptions(decimal: true),
                     controller: _height,
-                    onSaved: (value){
-                      _height.text = value!;
-                    },
-                    inputFormatters: [
-                                      FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))
-                                    ],
+                   
+                    
                     decoration: InputDecoration(
                       labelText: "Height (cm)",
                         suffixIcon: Padding(

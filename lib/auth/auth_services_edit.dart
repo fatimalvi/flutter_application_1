@@ -74,7 +74,7 @@ class AuthService2 {
         textBox3 = "None";
       }
        
-      print(uid);
+      
       // Create a Firestore document for the user with additional information
       await FirebaseFirestore.instance.collection('users').doc(uid).update({
         'firstName': firstName,
