@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/hospitals.dart';
+import 'package:flutter_application_1/screens/admin_login.dart';
+import 'package:flutter_application_1/screens/doctor_search.dart';
 
 class HospitalWidget extends StatelessWidget {
   final HospitalItem item;
+  final String userid;
+  final String username;
 
-  const HospitalWidget({Key? key, required this.item})
+  const HospitalWidget({Key? key, required this.item, required this.userid, required this.username})
       : assert(item != null),
         super(key: key);
 
@@ -14,11 +18,13 @@ class HospitalWidget extends StatelessWidget {
       child: ListTile(
         onTap: () {
           print("${item.name} pressed");
+          Navigator.push(context,
+                      MaterialPageRoute(builder: (context) {
+                    return Doctor_Search(hospitalName: item.name, userId: userid, username: username,);
+                  }));
+
         },
-        leading: Image.asset(item.image,
-            height: 120, // set the desired height of the image
-            width: 60,
-            fit: BoxFit.cover),
+       
         title: Text(item.name),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

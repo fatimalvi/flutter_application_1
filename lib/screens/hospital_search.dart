@@ -5,6 +5,8 @@ import 'package:flutter_application_1/models/hospitals.dart';
 
 import 'package:flutter_application_1/screens/patient_login.dart';
 import 'package:flutter_application_1/widgets/hospital_widget.dart';
+
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_application_1/screens/user_profile.dart';
@@ -21,7 +23,7 @@ class HospitalSearch extends State<Hospital_Search>{
 
   //
   //const Hospital_Search({required this.userId});
-  String? userName = '';
+  String userName = '';
   String uid = '';
 
   @override
@@ -92,19 +94,44 @@ class HospitalSearch extends State<Hospital_Search>{
           ),
 
           // Hospital list
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: ListView.builder(
-                itemCount: HospitalsList.hospitals.length,
-                itemBuilder: (context, index) {
-                  return HospitalWidget(
-                    item: HospitalsList.hospitals[index],
-                  );
-                },
-              ),
+         
+         Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance.collection('Hospital').snapshots(),
+              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.hasError) {
+                  print ('Error: ${snapshot.error}');
+                }
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                }
+
+                final docs = snapshot.data?.docs;
+
+                return ListView.builder(
+                  itemCount: docs?.length ?? 0,
+                  itemBuilder: (BuildContext context, int index) {
+                    final hospitalDoc = docs![index];
+                    final hospitalData = hospitalDoc.data() as Map<String, dynamic>;
+                    final hospitalItem = HospitalItem(
+                      name: hospitalData['hospitalname'] as String,
+                      location: hospitalData['hospitaladdress'] as String,
+                    );
+
+                    return HospitalWidget(item: hospitalItem, userid: uid, username: userName);
+                  },
+                );
+              },
             ),
           ),
+        ),
+
+
+
+
           Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

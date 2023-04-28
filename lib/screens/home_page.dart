@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/patient_login.dart';
-
+import 'package:flutter_application_1/screens/admin_login.dart';
 
 class MyHomePage extends StatelessWidget {
   @override
@@ -88,7 +88,10 @@ class MyHomePage extends StatelessWidget {
                   const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
-                      
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return AdminLogin();
+                      }));
                     
                     },
                     child: const Text('Admin'),
